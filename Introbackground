@@ -1,0 +1,90 @@
+//
+//  IntroBackground.swift
+//  Cogni_Sync_
+//
+//  Created by SAIL on 04/12/25.
+//
+
+import Foundation
+import SwiftUI
+
+struct IntroBackground: View {
+
+    @State private var navigate = false
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                // Background illustration
+                Image("intro_background")          // name must match your asset
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+
+                VStack {
+                    // Status bar / notch height spacing approximation
+                    Spacer()
+                        .frame(height: 80)
+
+                    // Title
+                    Text("CogniSync")
+                        .font(.system(size: 34, weight: .bold))
+                        .foregroundColor(.black)
+
+                    // Two subtitle lines
+                    VStack(spacing: 4) {
+                        Text("Boost your mind  Achieve calm")
+                        Text("Start today with CogniSync")
+                    }
+                    .font(.system(size: 14, weight: .regular))
+                    .foregroundColor(.black.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+
+                    Spacer()
+
+                    // Center circular arrow button
+                    Button {
+                        navigate = true
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .fill(Color.black.opacity(0.85))
+                                .frame(width: 56, height: 56)
+
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 22, weight: .semibold))
+                                .foregroundColor(.white)
+                        }
+                    }
+
+                    // "Get Started" label
+                    Text("Get Started")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(.black)
+                        .padding(.top, 8)
+                        .padding(.bottom, 32)
+                }
+                .padding(.horizontal, 24)
+            }
+            .navigationDestination(isPresented: $navigate) {
+                IntroNextView()
+            }
+        }
+    }
+}
+
+// Dummy next intro/login screen so navigation compiles
+struct IntroNextView: View {
+    var body: some View {
+        Text("Next Screen")
+            .font(.title)
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        IntroBackground()
+            .previewDevice("iPhone 15 Pro")
+    }
+}
