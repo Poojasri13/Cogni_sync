@@ -1,0 +1,105 @@
+import SwiftUI
+
+struct SignupView: View {
+    @State private var fullName = ""
+    @State private var age = ""
+    @State private var gender = ""
+    @State private var email = ""
+    @State private var password = ""
+    
+    var body: some View {
+        ZStack {
+            
+            // Background color
+            Color.white
+                .ignoresSafeArea()
+            
+            VStack(spacing: 20) {
+                
+                // App Logo + Title
+                VStack(spacing: 8) {
+                    Image(systemName: "leaf.circle")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.brown)
+                    
+                    Text("CogniSync")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.brown)
+                }
+                .padding(.top, 40)
+                
+                Text("Create account")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 10)
+                
+                // TEXTFIELDS
+                Group {
+                    customField(title: "Full Name", text: $fullName, placeholder: "enter name")
+                    customField(title: "Age", text: $age, placeholder: "enter age")
+                    customField(title: "Gender", text: $gender, placeholder: "enter gender")
+                    customField(title: "E-mail", text: $email, placeholder: "enter mail id")
+                    customField(title: "Password", text: $password, placeholder: "enter password", isSecure: true)
+                }
+                
+                // Sign Up Button
+                Button(action: {}) {
+                    Text("Sign up")
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray)
+                        )
+                }
+                .padding(.horizontal, 40)
+                .padding(.top, 10)
+                
+                // Bottom Login Text
+                HStack {
+                    Text("Already have a account ?")
+                    Text("Log in")
+                        .foregroundColor(.red)
+                        .fontWeight(.semibold)
+                }
+                .font(.footnote)
+                .padding(.top, 10)
+                
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+        }
+    }
+    
+    // MARK: Custom TextField Component
+    func customField(title: String, text: Binding<String>, placeholder: String, isSecure: Bool = false) -> some View {
+        
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.system(size: 14, weight: .semibold))
+            
+            if isSecure {
+                SecureField(placeholder, text: text)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+            } else {
+                TextField(placeholder, text: text)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(10)
+            }
+        }
+        .padding(.horizontal, 10)
+    }
+}
+
+struct SignupView_Previews: PreviewProvider {
+    static var previews: some View {
+        SignupView()
+    }
+}
+
